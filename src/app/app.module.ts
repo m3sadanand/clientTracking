@@ -1,5 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { RouterModule, RoutesRecognized } from '@angular/router';
 
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -12,13 +13,19 @@ import {MatCardModule} from '@angular/material/card';
 import {MatToolbarModule} from '@angular/material/toolbar';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
+import { routes } from "./app-routing.module";
+import { OpenTripsComponent } from './components/open-trips/open-trips.component';
+import { MatTableModule } from '@angular/material'  
+import { MatPaginatorModule } from '@angular/material';
+import { AgmCoreModule } from '@agm/core';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import {MatDialogModule} from '@angular/material/dialog';
+import { HeaderComponent } from './components/header/header.component';
+import { LogoutComponent } from './logout/logout.component';
 
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    LoginComponent
-  ],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
@@ -31,6 +38,22 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
+    RouterModule.forRoot(routes),
+    MatTableModule,
+    MatPaginatorModule,
+    AgmCoreModule.forRoot({
+      apiKey: 'AIzaSyA1Mf8fmcI-E_WR2231oEJvXtnYfmSbjXU'
+    }),
+    NgbModule,
+    MatDialogModule
+  ],
+  declarations: [
+    AppComponent,
+    LoginComponent,
+    PageNotFoundComponent,
+    OpenTripsComponent,
+    HeaderComponent,
+    LogoutComponent
   ],
   providers: [],
   bootstrap: [AppComponent]

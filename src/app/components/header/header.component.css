@@ -1,0 +1,11 @@
+.bg-gradient {
+    background:darkolivegreen;
+    height: 52px;
+  }
+.logut-btn{
+    cursor: pointer;
+    float: right;
+    font-size: 34px;
+    margin-top: 10px;
+    color: antiquewhite;
+}

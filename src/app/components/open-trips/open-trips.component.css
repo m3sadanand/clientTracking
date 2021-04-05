@@ -1,0 +1,136 @@
+table {
+    width: 100%;
+}
+
+.page-title {
+    float: left;
+    color: #6B6E70;;
+    position: relative;
+    text-align: left;
+    padding: 14px;
+}
+
+.mat-form-field {
+    float: right;
+    display: inline-block;
+    font-size: 14px;
+    width: 20%;
+    position: relative;
+    color: rgb(132, 151, 151);
+}
+
+.tripheader {
+    float: left;
+    width: 100%;
+    margin: auto;
+    padding: 20px;
+    justify-content: center;
+    text-align: center;
+    vertical-align: middle;
+}
+
+.bg-#5B84B1FF {
+    background-color: #5B84B1FF;
+}
+
+.mat-paginator {
+    background-color: #86C232;
+    color: #FCFDFE;
+    float: left;
+    overflow: auto;
+    width: 41%;
+    min-height: 25px;
+    border-radius: 7px;
+    margin-top: 15px;
+    float: right;
+}
+
+.mat-sort-header-content {
+    display: block !important;
+    min-height: 25px;
+}
+
+.data {
+    display: block!important;
+}
+
+.table {
+    width: 100vw;
+    max-width: 100%;
+    overflow: auto;
+    margin-bottom: 10px;
+    display: table;
+    border-collapse: collapse;
+    margin: 0px;
+    background-color: white;
+    border-right: 1px solid darkolivegreen;
+    border-left: 1px solid darkolivegreen;
+    border-radius: 12px;
+}
+
+.row,
+.header-row {
+    display: table-row;
+    min-height: 25px !important;
+    border: 1px solid rgb(102, 101, 101);
+}
+
+.cell,
+.header-cell {
+    word-wrap: initial;
+    display: table-cell;
+    padding: 0px 5px;
+    line-break: unset;
+    width: fit-content;
+    white-space: nowrap;
+    overflow: hidden;
+    vertical-align: middle;
+    text-align: center;
+    border: 1px solid rgb(102, 101, 101);
+}
+
+.header-row,
+.header-cell {
+    margin: 0 auto;
+    min-height: 50px !important;
+    text-align: center;
+    vertical-align: middle;
+    align-self: center;
+    background-color: #61892F;
+    color: white;
+}
+
+.sort-header {
+    display: flex;
+    align-content: center;
+    text-align: center;
+    justify-content: center;
+    font-size: 12pt;
+}
+
+.header-cell {
+    font-size: 14px;
+    /* //	font-weight: bold; */
+}
+
+.mat-card {
+    min-width: max-content;
+    max-width: max-content;
+}
+
+.mat-card {
+    min-width: 100% !important;
+    max-width: 100% !important;
+}
+
+.table {
+    display: block !important;
+}
+
+.mat-row:nth-child(even){
+    background-color:white;
+}
+        
+.mat-row:nth-child(odd){
+    background-color: #F0F0F0;
+}

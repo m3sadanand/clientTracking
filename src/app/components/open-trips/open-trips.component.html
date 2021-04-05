@@ -1,0 +1,133 @@
+<div class="container">
+  <div class='tripheader'>
+    <h2 class="page-title">Open Trips</h2>
+    <mat-form-field appearance="outline" style="color: #61892F;">
+      <mat-label>Search</mat-label>
+      <input matInput (keyup)="applyFilter($event)" placeholder="Search here..">
+    </mat-form-field>
+  </div>
+  <div class="component data component-card">
+    <mat-table [dataSource]="dataSource" matSort class="table">
+
+      <!-- Position Column -->
+      <ng-container matColumnDef="SrNo">
+        <mat-header-cell class="header-cell" *matHeaderCellDef mat-sort-header>Sr. No. </mat-header-cell>
+        <td mat-cell *matCellDef="let item; let i = index">{{ (paginatorRef.pageIndex * paginatorRef.pageSize) + (i + 1)
+          }}</td>
+      </ng-container>
+
+      <!-- Name Column -->
+      <ng-container matColumnDef="Date">
+        <mat-header-cell class="header-cell" *matHeaderCellDef mat-sort-header> Date </mat-header-cell>
+        <mat-cell class="cell" *matCellDef="let element"> {{element.date | date : 'medium'}} </mat-cell>
+      </ng-container>
+
+      <!-- Weight Column -->
+      <ng-container matColumnDef="Time">
+        <mat-header-cell class="header-cell" *matHeaderCellDef mat-sort-header> Time </mat-header-cell>
+        <mat-cell class="cell" *matCellDef="let element"> {{element.time}} </mat-cell>
+      </ng-container>
+
+      <!-- Symbol Column -->
+      <ng-container matColumnDef="Location">
+        <mat-header-cell class="header-cell" *matHeaderCellDef mat-sort-header> Location </mat-header-cell>
+        <mat-cell class="cell" *matCellDef="let element"> {{element.location}} </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="TripId">
+        <mat-header-cell class="header-cell" *matHeaderCellDef mat-sort-header> Trip Id </mat-header-cell>
+        <mat-cell class="cell" *matCellDef="let element"> {{element.tripId}} </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="BookingRef">
+        <mat-header-cell class="header-cell" *matHeaderCellDef mat-sort-header> Booking Ref. No. </mat-header-cell>
+        <mat-cell class="cell" *matCellDef="let element"> {{element.bookingRefNo}} </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="CustomerName">
+        <mat-header-cell class="header-cell" *matHeaderCellDef mat-sort-header> Customer Name </mat-header-cell>
+        <mat-cell class="cell" *matCellDef="let element"> {{element.customerName}} </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="CustomerMobile">
+        <mat-header-cell class="header-cell" *matHeaderCellDef mat-sort-header> Customer Mobile </mat-header-cell>
+        <mat-cell class="cell" *matCellDef="let element"> {{element.customerMobile}} </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="Vehicle">
+        <mat-header-cell class="header-cell" *matHeaderCellDef mat-sort-header> Vehicle </mat-header-cell>
+        <mat-cell class="cell" *matCellDef="let element"> {{element.vehicle}} </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="Driver">
+        <mat-header-cell class="header-cell" *matHeaderCellDef mat-sort-header> Driver </mat-header-cell>
+        <mat-cell class="cell" *matCellDef="let element"> {{element.driver}} </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="Device">
+        <mat-header-cell class="header-cell" *matHeaderCellDef mat-sort-header> Device </mat-header-cell>
+        <mat-cell class="cell" *matCellDef="let element"> {{element.device}} </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="OTP">
+        <mat-header-cell class="header-cell" *matHeaderCellDef mat-sort-header> OTP </mat-header-cell>
+        <mat-cell class="cell" *matCellDef="let element" (click)="getTripEndOtp(element.tripId)"> <a mat-button>VIEW
+            OTP</a></mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="VehicleLocation">
+        <mat-header-cell class="header-cell" *matHeaderCellDef mat-sort-header> Vehicle Location </mat-header-cell>
+        <mat-cell class="cell" *matCellDef="let element"> <a mat-button
+            (click)="showLocation(element.tripId,content  )">Vehicle Location</a></mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="TripSheet">
+        <mat-header-cell class="header-cell" *matHeaderCellDef mat-sort-header> TripSheet </mat-header-cell>
+        <mat-cell class="cell" *matCellDef="let element"><button type="button" class="btn "><i class="fa fa-file-pdf-o"
+              style="font-size:14px"></i></button></mat-cell>
+      </ng-container>,content
+
+      <ng-container matColumnDef="Close">
+        <mat-header-cell class="header-cell" *matHeaderCellDef mat-sort-header> Close </mat-header-cell>
+        <mat-cell class="cell" *matCellDef="let element"><a mat-button
+            (click)="manualClose(element.tripId, element.bookingRefNo, element.driver, element.customerName, element.vehicle)">CLOSE</a>
+        </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="Alert">
+        <mat-header-cell class="header-cell" *matHeaderCellDef mat-sort-header> Alert </mat-header-cell>
+        <mat-cell class="cell" *matCellDef="let element"><a mat-button>Alert</a></mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="SPBookingRefNo">
+        <mat-header-cell class="header-cell" *matHeaderCellDef mat-sort-header> SP Booking Ref.No. </mat-header-cell>
+        <mat-cell class="cell" *matCellDef="let element"> {{element.spBookingRefNo}} </mat-cell>
+      </ng-container>
+
+      <mat-header-row class="header-row" *matHeaderRowDef="displayedColumns"></mat-header-row>
+      <mat-row class="row" *matRowDef="let row; columns: displayedColumns;"></mat-row>
+
+    </mat-table>
+
+    <mat-paginator fxFlex="100" #paginatorRef [length]="5" [pageSize]="5" [pageSizeOptions]="[5, 10, 20]"
+      showFirstLastButtons></mat-paginator>
+  </div>
+</div>
+
+<ng-template #content let-modal>
+  <div class="modal-header">
+    <h2 class="modal-title" style="color: gray;">
+      Vehicle Location
+    </h2>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div style="padding: 20px">
+      <agm-map style="height: 300px;" [latitude]="lat" [longitude]="lng" [zoom]="13">
+        <agm-marker [latitude]="lat" [longitude]="lng"></agm-marker>
+      </agm-map>
+    </div>
+  </div>
+</ng-template>
