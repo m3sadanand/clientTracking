@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { AuthServiceService } from '../_services/auth-service.service';
+import { Router } from '@angular/router';
+
 
 @Component({
   selector: 'app-login',
@@ -8,31 +10,39 @@ import { AuthServiceService } from '../_services/auth-service.service';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
-  loginForm :  FormGroup;
-  constructor(private authService: AuthServiceService) { }
+  loginForm: FormGroup;
+  constructor(public router: Router, private authService: AuthServiceService) { }
 
   ngOnInit() {
     this.initForm();
   }
 
-  initForm(){
+  initForm() {
     this.loginForm = new FormGroup({
-      email: new FormControl('',[Validators.required]),
-      password: new FormControl('',[Validators.required])
+      email: new FormControl('', [Validators.required]),
+      password: new FormControl('', [Validators.required])
     })
   }
 
-  loginProcess(){
-    if(this.loginForm.valid){
+  loginProcess() {
+    let result = false;
+    if (this.loginForm.valid) {
       console.log("valid form");
-      this.authService.login(this.loginForm.value).subscribe(result=>{
-        if(result.success){
-          console.log("success",result)
-        }
-        else{
-          console.log("Failed",result)
-        }
-      })
+      // this.authService.login(this.loginForm.value).subscribe(result=>{
+      //   if(result.success){
+      //     console.log("success",result)
+      //   }
+      //   else{
+      //     console.log("Failed",result)
+      //   }
+      // })
+      result = this.authService.login(this.loginForm.value);
+      if (result){
+        this.router.navigate(["/opentrips"]);
+        localStorage.setItem("userLoggedIn","true");
+      }
+      else
+        console.log("logged out")
     }
   }
 
