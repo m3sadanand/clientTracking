@@ -1,17 +1,18 @@
 <div fxLayoutAlign="center center" fxFlexFill class="main-div">
-  <mat-card fxFlex="25">
-    <mat-toolbar style="background-color: #61892F;">Login Page</mat-toolbar>
-    <form fxLayoutAlign="stretch" fxLayout="column" class="login-form" 
-    [formGroup]="loginForm" (ngSubmit)="loginProcess()">
-      <mat-form-field >
+  <img class="logo  " src="../../../../../assets/img/odocon_logo.png" width="140" height="45">
+  <mat-card fxFlex="25" style="border-radius: 8px;">
+    <mat-toolbar class="toolbar-title">Login Page</mat-toolbar>
+    <form fxLayoutAlign="stretch" fxLayout="column" class="login-form" [formGroup]="loginForm"
+      (ngSubmit)="loginProcess()">
+      <mat-form-field>
         <input matInput placeholder="Enter Username" formControlName="email">
       </mat-form-field>
-    
+
       <mat-form-field>
         <input matInput type="password" placeholder="Enter Password" formControlName="password">
       </mat-form-field>
-      <button mat-raised-button type="submit" class="mt-5" style="background-color: #61892F;">Login</button>
+      <div class="text-danger" id="wrongCred"></div>
+      <button mat-raised-button type="submit" class="mt-4" style="background-color: #61892F;">Login</button>
     </form>
-    
   </mat-card>
 </div>

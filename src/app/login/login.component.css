@@ -5,3 +5,21 @@
 .login-form {
     padding: 20px;
 }
+
+.main-div {
+    background-image: url(/../../../../assets/img/background-home.jpg);
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+}
+
+.toolbar-title {
+    background-color: #61892F;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+}
+
+.logo {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+}
