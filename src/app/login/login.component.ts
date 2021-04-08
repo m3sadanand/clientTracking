@@ -27,7 +27,6 @@ export class LoginComponent implements OnInit {
   loginProcess() {
     let result = false;
     if (this.loginForm.valid) {
-      console.log("valid form");
       // this.authService.login(this.loginForm.value).subscribe(result=>{
       //   if(result.success){
       //     console.log("success",result)
@@ -42,7 +41,7 @@ export class LoginComponent implements OnInit {
         localStorage.setItem("userLoggedIn","true");
       }
       else
-        console.log("logged out")
+        document.getElementById("wrongCred").innerHTML = "Wrong credentials entered, please try again."
     }
   }
 

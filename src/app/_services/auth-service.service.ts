@@ -16,7 +16,7 @@ export class AuthServiceService {
 
   login(data){
     console.log("data: ",data)
-    if(data.email == 'test' && data.password == 'test')
+    if(data.email == 'odocontest' && data.password == 'odoconpass')
       return true;
     else
       return false;

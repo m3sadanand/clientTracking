@@ -1,5 +1,5 @@
 .bg-gradient {
-    background:darkolivegreen;
+    background:darkseagreen;
     height: 52px;
   }
 .logut-btn{
@@ -7,5 +7,7 @@
     float: right;
     font-size: 34px;
     margin-top: 10px;
-    color: antiquewhite;
+}
+.logo{
+  margin-top: 6px;
 }

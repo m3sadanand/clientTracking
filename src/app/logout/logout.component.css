@@ -1,4 +1,4 @@
-.logout-title{
+.logout-title {
     margin: auto;
     width: 60%;
     text-align: left;
@@ -6,7 +6,8 @@
     margin-top: 15%;
     font-size: 30px;
 }
-.logout-msg{
+
+.logout-msg {
     margin: auto;
     width: 60%;
     padding: 10px;
@@ -15,10 +16,18 @@
     color: white;
     font-size: 20px;
 }
-.line-hr{
+
+.line-hr {
     margin-top: 0px;
     width: 60%;
 }
-.login-agn{
+
+.login-agn {
     text-align: center;
+}
+
+.logo {
+    position: absolute;
+    top: 20px;
+    left: 20px;
 }

@@ -32,6 +32,7 @@ export class OpenTripsComponent implements OnInit {
 
   ngOnInit(): void {
     this.ot.getOpenTrips().subscribe((response) => {
+      response.data.openTrip.sort((a,b) => a.tripId - b.tripId);
       this.dataSource = new MatTableDataSource(response.data.openTrip);
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
