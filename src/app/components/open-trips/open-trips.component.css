@@ -55,7 +55,7 @@ table {
 }
 
 .table {
-    width: 100vw;
+    width: 100%;
     max-width: 100%;
     overflow: auto;
     margin-bottom: 10px;
@@ -63,16 +63,12 @@ table {
     border-collapse: collapse;
     margin: 0px;
     background-color: white;
-    border-right: 1px solid darkolivegreen;
-    border-left: 1px solid darkolivegreen;
-    border-radius: 12px;
 }
 
 .row,
 .header-row {
     display: table-row;
-    min-height: 25px !important;
-    border: 1px solid rgb(102, 101, 101);
+    min-height: 36px !important;
 }
 
 .cell,
@@ -124,7 +120,7 @@ table {
 }
 
 .table {
-    display: block !important;
+    display: table;
 }
 
 .mat-row:nth-child(even){
@@ -133,4 +129,14 @@ table {
         
 .mat-row:nth-child(odd){
     background-color: #F0F0F0;
+}
+
+.mat-table{    
+    border-radius: 8px;
+    overflow:hidden !important;
+}
+
+table tr:last-child td
+{
+  border-bottom:0 solid
 }

@@ -18,11 +18,26 @@ import { openTripModal } from '../../_modals/openTripModal';
 export class OpenTripsComponent implements OnInit {
   lat: any;
   lng: any;
+  origin: any;
+  destination: any;
   opentrips: openTripModal[] = [];
   closeResult: string;
-  displayedColumns: string[] = ['SrNo', 'Date', 'Time', 'Location','TripId','BookingRef','CustomerName','CustomerMobile','Vehicle',
-  'Driver','Device','OTP','VehicleLocation','TripSheet','Close','Alert','SPBookingRefNo'];
+  displayedColumns: string[] = ['SrNo', 'Date','CustomerName','CustomerMobile','Driver','VehicleLocation','Alert','SPBookingRefNo'];
   dataSource: MatTableDataSource<openTripModal>;
+  public renderOptions = {
+    suppressMarkers: true,
+  }
+  public markerOptions = {
+    origin: {
+      label: 'start',
+      draggable: false,
+    },
+    destination: {
+      icon: '../../assets/img/map_car.png',
+      label: 'current',
+      opacity: 0.8,
+    },
+  }
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
@@ -46,8 +61,14 @@ export class OpenTripsComponent implements OnInit {
   showLocation(tripId, content) {
     this.ot.getTripLocation(tripId).subscribe((response) => {
       if (response["statusCode"] == 200) {
-        this.lat = response["data"].latitude;
-        this.lng = response["data"].longitude;
+        this.origin = {
+          lat: response["data"].latitude,
+          lng: response["data"].longitude
+        };
+        this.destination = {
+          lat: response["data"].checkInLat,
+          lng: response["data"].checkInLng
+        };
       }
       this.openMap(content);
     })

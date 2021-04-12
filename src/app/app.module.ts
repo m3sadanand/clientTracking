@@ -23,6 +23,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import {MatDialogModule} from '@angular/material/dialog';
 import { HeaderComponent } from './components/header/header.component';
 import { LogoutComponent } from './logout/logout.component';
+import { AgmDirectionModule } from 'agm-direction';
 
 
 @NgModule({
@@ -45,7 +46,8 @@ import { LogoutComponent } from './logout/logout.component';
       apiKey: 'AIzaSyA1Mf8fmcI-E_WR2231oEJvXtnYfmSbjXU'
     }),
     NgbModule,
-    MatDialogModule
+    MatDialogModule,
+    AgmDirectionModule
   ],
   declarations: [
     AppComponent,
