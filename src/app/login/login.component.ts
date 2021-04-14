@@ -35,13 +35,14 @@ export class LoginComponent implements OnInit {
       //     console.log("Failed",result)
       //   }
       // })
-      result = this.authService.login(this.loginForm.value);
-      if (result){
-        this.router.navigate(["/opentrips"]);
-        localStorage.setItem("userLoggedIn","true");
-      }
-      else
+      this.authService.login(this.loginForm.value).subscribe(response =>{
+        if(response["data"] == true){
+          this.router.navigate(["/opentrips"]);
+          localStorage.setItem("userLoggedIn","true");
+        }
+        else
         document.getElementById("wrongCred").innerHTML = "Wrong credentials entered, please try again."
+      })
     }
   }
 

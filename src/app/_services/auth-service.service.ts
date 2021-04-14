@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { baseUrl } from 'src/environments/environment';
+import { tap } from "rxjs/operators";
 
 @Injectable({
   providedIn: 'root'
@@ -9,16 +10,18 @@ import { baseUrl } from 'src/environments/environment';
 export class AuthServiceService {
 
   constructor(private http:HttpClient) { }
+  url:string = "http://182.18.138.170:11010/odoconnew/signin";
 
   // login(data):Observable<any>{
   //   return this.http.post(`${baseUrl}users/login`,data)
   // }
 
   login(data){
-    console.log("data: ",data)
-    if(data.email == 'odocontest' && data.password == 'odoconpass')
-      return true;
-    else
-      return false;
+    let reqObj = {};
+    reqObj = {
+      userName: data.email,
+      password: data.password
+    }
+    return this.http.post(this.url, reqObj).pipe(tap(res => {}));
   }
 }
