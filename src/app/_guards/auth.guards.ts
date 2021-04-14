@@ -9,14 +9,12 @@ import { Router } from '@angular/router';
 export class AuthGuard implements CanActivate {
   constructor(public router: Router){}
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
-      console.log("inside authhh")
     const userLoggedIn = localStorage.getItem('userLoggedIn');
     if (userLoggedIn == "true") {
         // logged in so return true
         return true;
     }
     //not logged in so redirect to login page with the return url
-    console.log("return url: ",state.url)
     this.router.navigate(["/login"]);
 }
 }
