@@ -9,6 +9,7 @@ import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dial
 //import { ManualclosedialogComponent } from '../components/manualclosedialog/manualclosedialog.component';
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 import { openTripModal } from '../../_modals/openTripModal';
+import swal from 'sweetalert2';
 
 @Component({
   selector: 'app-open-trips',
@@ -46,9 +47,22 @@ export class OpenTripsComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.ot.getOpenTrips().subscribe((response) => {
-      response.data.openTrip.sort((a,b) => a.tripId - b.tripId);
-      this.dataSource = new MatTableDataSource(response.data.openTrip);
+    this.getCorporateTrips();
+  }
+
+  getCorporateTrips() {
+    this.ot.getCorporateOpenTrips().subscribe((response) => {
+      var trips = [];
+      response["data"].forEach(element => {
+        if (element.corporateName == "Accenture Solutions Private Limited - CC" ||
+          element.corporateName == "Accenture Solutions Private Limited - Goa" ||
+          element.corporateName == "Accenture Solutions Private Limited - IDB" ||
+          element.corporateName == "Accenture Solutions Private Limited"
+        )
+          trips.push(element);
+      });
+      trips.sort((a, b) => a.tripId - b.tripId);
+      this.dataSource = new MatTableDataSource(trips);
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
     })
@@ -69,8 +83,28 @@ export class OpenTripsComponent implements OnInit {
           lat: response["data"].checkInLat,
           lng: response["data"].checkInLng
         };
+        if ((this.origin.lat == 0 && this.origin.lng == 0) ||
+          (this.destination.lat == 0 && this.destination.lng == 0))
+          swal({
+            titleText: 'Error',
+            html: 'Location not available',
+            type: 'error',
+            confirmButtonText: 'Close',
+            animation: false,
+            width: 540
+          });
+        else
+          this.openMap(content);
       }
-      this.openMap(content);
+      else
+        swal({
+          titleText: 'Error',
+          html: 'Location not available',
+          type: 'error',
+          confirmButtonText: 'Close',
+          animation: false,
+          width: 540
+        });
     })
   }
 
