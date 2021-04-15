@@ -8,10 +8,11 @@ import { Observable } from 'rxjs';
 export class OpentripsService {
 
   constructor(private http:HttpClient) { }
-  url:string = "http://182.18.138.170:11010/odoconnew/getTripMainView";
+  urlCorporateOpenTrips = "http://182.18.138.170:11010/odoconnew/CorporateOpenTrips";
   urlLocation ="http://182.18.138.170:11010/odoconnew/getLocation";
-  getOpenTrips():Observable<any>{
-    return this.http.get(this.url);
+
+  getCorporateOpenTrips():Observable<any>{
+    return this.http.get(this.urlCorporateOpenTrips);
   }
 
   getTripLocation(tripId){
