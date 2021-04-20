@@ -34,7 +34,7 @@ export class OpenTripsComponent implements OnInit {
       draggable: false,
     },
     destination: {
-      icon: '../../assets/img/map_car.png',
+      icon: './assets/img/map_car.png',
       label: 'current',
       opacity: 0.8,
     },
