@@ -652,7 +652,7 @@ a:hover {
     border: 0;
     width: 100%;
     padding: 0 0 0 26px;
-    background-image: url(../../assets/img/search-bg-grey.svg) !important;
+    background-image: url(./assets/img/search-bg-grey.svg) !important;
     background-repeat: no-repeat no-repeat !important;
     background-size: 15px 25px !important;
 }

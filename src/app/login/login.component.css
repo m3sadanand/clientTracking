@@ -7,7 +7,7 @@
 }
 
 .main-div {
-    background-image: url(/../../../../assets/img/background-home.jpg);
+    background-image: url(/./assets/img/background-home.jpg);
     border-top-left-radius: 8px;
     border-top-right-radius: 8px;
 }
