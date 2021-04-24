@@ -140,3 +140,26 @@ table tr:last-child td
 {
   border-bottom:0 solid
 }
+
+.btn-send{
+    color: white;
+    background-color: darkolivegreen;
+    width: 100%;
+}
+
+.btn-close{
+    color: white;
+    background-color: darkgrey;
+    width: 100%;
+}
+
+.text-mobile{
+    margin-left: 10px;
+    border: 1px solid lightgray;
+    border-radius: 5px;
+    padding-left: 7px;
+}
+
+i {
+    font-weight: 200;
+}

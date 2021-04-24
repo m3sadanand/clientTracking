@@ -1,12 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { OpentripsService } from '../../_services/open-trips.service';
+import { AlertService } from '../../_services/alert.service';
 import { ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatSort } from '@angular/material/sort';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-//import { TripotpComponent } from '../components/tripotp/tripotp.component';
-//import { ManualclosedialogComponent } from '../components/manualclosedialog/manualclosedialog.component';
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 import { openTripModal } from '../../_modals/openTripModal';
 import swal from 'sweetalert2';
@@ -42,8 +41,16 @@ export class OpenTripsComponent implements OnInit {
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
+  alertData: any = [];
+  mobileNumber: Number;
+  tripId: string;
 
-  constructor(public ot: OpentripsService, public dialog: MatDialog, public modalService: NgbModal) {
+  constructor(
+    public opentripService: OpentripsService, 
+    public dialog: MatDialog, 
+    public modalService: NgbModal,
+    public alertService: AlertService,
+    ) {
   }
 
   ngOnInit(): void {
@@ -51,14 +58,14 @@ export class OpenTripsComponent implements OnInit {
   }
 
   getCorporateTrips() {
-    this.ot.getCorporateOpenTrips().subscribe((response) => {
+    this.opentripService.getCorporateOpenTrips().subscribe((response) => {
       var trips = [];
       response["data"].forEach(element => {
-        if (element.corporateName == "Accenture Solutions Private Limited - CC" ||
-          element.corporateName == "Accenture Solutions Private Limited - Goa" ||
-          element.corporateName == "Accenture Solutions Private Limited - IDB" ||
-          element.corporateName == "Accenture Solutions Private Limited"
-        )
+        // if (element.corporateName == "Accenture Solutions Private Limited - CC" ||
+        //   element.corporateName == "Accenture Solutions Private Limited - Goa" ||
+        //   element.corporateName == "Accenture Solutions Private Limited - IDB" ||
+        //   element.corporateName == "Accenture Solutions Private Limited"
+        // )
           trips.push(element);
       });
       trips.sort((a, b) => a.tripId - b.tripId);
@@ -68,12 +75,62 @@ export class OpenTripsComponent implements OnInit {
     })
   }
 
-  // getTripEndOtp(tripId) {
-  //   this.dialog.open(TripotpComponent, { width: "600px", data: { ttrip: tripId } })
-  // }
+  getAlert(tripId,content){
+    this.tripId = tripId;
+    this.alertService.getAlert(tripId).subscribe((response)=>{
+      if(response["message"] == "Alert Details successfully"){
+      this.alertData = response.data;
+      this.openAlertModal(content);
+      }
+    });
+  }
+
+  sendAlert(){
+    let alertObj = {
+      "tripId": this.tripId,
+      "mobile": this.mobileNumber,
+      "guestName": this.alertData.guestName,
+      "guestMobile": this.alertData.guestMobile,
+      "driverName": this.alertData.driverName,
+      "driverMobile": this.alertData.driverMobile,
+      "carRegNo": this.alertData.carRegNo
+    };
+    this.alertService.sendAlert(alertObj).subscribe((response)=>{
+      if(response["data"] == true){
+        this.modalService.dismissAll();
+        swal({
+          titleText: 'Success',
+          html: "Emergency SMS sent Successfully.",
+          type: 'success',
+          confirmButtonText: 'Ok',
+          animation: false,
+          width: 540
+        });
+      }
+      else{
+        swal({
+          titleText: 'Error',
+          html: 'Emergency SMS not delivered.',
+          type: 'error',
+          confirmButtonText: 'Close',
+          animation: false,
+          width: 540
+        });
+      }
+    })
+  }
+
+  validMobile() {
+    if (this.mobileNumber) {
+      if (this.mobileNumber.toString().length == 10)
+        return true;
+      else
+        return false;
+    }
+  }
 
   showLocation(tripId, content) {
-    this.ot.getTripLocation(tripId).subscribe((response) => {
+    this.opentripService.getTripLocation(tripId).subscribe((response) => {
       if (response["statusCode"] == 200) {
         this.origin = {
           lat: response["data"].latitude,
@@ -117,12 +174,21 @@ export class OpenTripsComponent implements OnInit {
       this.dataSource.paginator.firstPage();
     }
   }
-  // manualClose(tripId, bookingRefNo, driver, customerName, vehicle) {
-  //   this.dialog.open(ManualclosedialogComponent, { width: "150vw", data: { dialogtripId: tripId, dialogBookingRefno: bookingRefNo, dialogDriver: driver, dialogCustomerName: customerName, dialogvehicle: vehicle } })
-
-  // }
 
   openMap(content) {
+    this.modalService
+      .open(content, { ariaLabelledBy: "modal-basic-title" })
+      .result.then(
+        result => {
+          this.closeResult = `Closed with: ${result}`;
+        },
+        reason => {
+          this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+        }
+      );
+  }
+
+  openAlertModal(content) {
     this.modalService
       .open(content, { ariaLabelledBy: "modal-basic-title" })
       .result.then(
