@@ -61,11 +61,11 @@ export class OpenTripsComponent implements OnInit {
     this.opentripService.getCorporateOpenTrips().subscribe((response) => {
       var trips = [];
       response["data"].forEach(element => {
-        // if (element.corporateName == "Accenture Solutions Private Limited - CC" ||
-        //   element.corporateName == "Accenture Solutions Private Limited - Goa" ||
-        //   element.corporateName == "Accenture Solutions Private Limited - IDB" ||
-        //   element.corporateName == "Accenture Solutions Private Limited"
-        // )
+        if (element.corporateName == "Accenture Solutions Private Limited - CC" ||
+          element.corporateName == "Accenture Solutions Private Limited - Goa" ||
+          element.corporateName == "Accenture Solutions Private Limited - IDB" ||
+          element.corporateName == "Accenture Solutions Private Limited"
+        )
           trips.push(element);
       });
       trips.sort((a, b) => a.tripId - b.tripId);
