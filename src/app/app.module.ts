@@ -24,7 +24,7 @@ import {MatDialogModule} from '@angular/material/dialog';
 import { HeaderComponent } from './components/header/header.component';
 import { LogoutComponent } from './logout/logout.component';
 import { AgmDirectionModule } from 'agm-direction';
-
+import { HashLocationStrategy, LocationStrategy  } from '@angular/common';
 
 @NgModule({
   imports: [
@@ -57,7 +57,7 @@ import { AgmDirectionModule } from 'agm-direction';
     HeaderComponent,
     LogoutComponent
   ],
-  providers: [],
+  providers: [{provide : LocationStrategy , useClass: HashLocationStrategy}],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
