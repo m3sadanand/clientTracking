@@ -45,8 +45,10 @@
 
       <ng-container matColumnDef="VehicleLocation">
         <mat-header-cell class="header-cell" *matHeaderCellDef mat-sort-header> Vehicle Location </mat-header-cell>
-        <mat-cell class="cell" *matCellDef="let element"> <a mat-button
-            (click)="showLocation(element.tripId,content)">Vehicle Location</a></mat-cell>
+        <mat-cell class="cell" *matCellDef="let element" (click)="showLocation(element.tripId,content)"> 
+          <a mat-button *ngIf="element.dutyStatusType == 'Ongoing'" >Vehicle Location</a>
+            <a mat-button *ngIf="element.dutyStatusType != 'Ongoing'" [disabled]="element.dutyStatusType != 'Ongoing'">Vehicle Location</a>
+            </mat-cell>
       </ng-container>
 
       <ng-container matColumnDef="Close">
@@ -58,7 +60,10 @@
 
       <ng-container matColumnDef="Alert">
         <mat-header-cell class="header-cell" *matHeaderCellDef mat-sort-header> Alert </mat-header-cell>
-        <mat-cell class="cell" *matCellDef="let element" (click)="getAlert(element.tripId,alertModal)"><a mat-button>Alert</a></mat-cell>
+        <mat-cell class="cell" *matCellDef="let element" (click)="getAlert(element.tripId,alertModal)">
+          <a mat-button *ngIf="element.dutyStatusType == 'Ongoing'">Alert</a>
+          <a mat-button *ngIf="element.dutyStatusType != 'Ongoing'" [disabled]="element.dutyStatusType != 'Ongoing'">Alert</a>
+        </mat-cell>
       </ng-container>
 
       <ng-container matColumnDef="SPBookingRefNo">

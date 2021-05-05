@@ -9,6 +9,8 @@ import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dial
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 import { openTripModal } from '../../_modals/openTripModal';
 import swal from 'sweetalert2';
+import { environment } from '../../../environments/environment';
+import { interval, Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-open-trips',
@@ -44,6 +46,7 @@ export class OpenTripsComponent implements OnInit {
   alertData: any = [];
   mobileNumber: Number;
   tripId: string;
+  subscription: Subscription;
 
   constructor(
     public opentripService: OpentripsService, 
@@ -58,6 +61,11 @@ export class OpenTripsComponent implements OnInit {
   }
 
   getCorporateTrips() {
+    this.getCorporateOpenTrips();
+    this.subscription = interval(environment.refreshTimer).subscribe(val => this.getCorporateOpenTrips());
+  }
+
+  getCorporateOpenTrips(){
     this.opentripService.getCorporateOpenTrips().subscribe((response) => {
       var trips = [];
       response["data"].forEach(element => {
