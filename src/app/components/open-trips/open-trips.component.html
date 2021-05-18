@@ -91,11 +91,16 @@
     </button>
   </div>
   <div class="modal-body">
-    <div style="padding: 20px">
+    <div *ngIf="mapView" style="padding: 20px">
       <agm-map style="height: 350px;" [latitude]="lat" [longitude]="lng">
         <agm-direction [origin]="origin" [destination]="destination" [renderOptions]="renderOptions" 
         [markerOptions]="markerOptions" >
         </agm-direction>
+      </agm-map>
+    </div>
+    <div *ngIf="!mapView" style="padding: 20px">
+      <agm-map style="height: 350px;" [latitude]="lat" [longitude]="lng" [zoom]="14">
+        <agm-marker [latitude]="lat" [longitude]="lng"></agm-marker>
       </agm-map>
     </div>
   </div>
