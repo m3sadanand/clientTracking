@@ -47,6 +47,7 @@ export class OpenTripsComponent implements OnInit {
   mobileNumber: Number;
   tripId: string;
   subscription: Subscription;
+  mapView: boolean = false;
 
   constructor(
     public opentripService: OpentripsService, 
@@ -148,18 +149,14 @@ export class OpenTripsComponent implements OnInit {
           lat: response["data"].checkInLat,
           lng: response["data"].checkInLng
         };
-        if ((this.origin.lat == 0 && this.origin.lng == 0) ||
-          (this.destination.lat == 0 && this.destination.lng == 0))
-          swal({
-            titleText: 'Error',
-            html: 'Location not available',
-            type: 'error',
-            confirmButtonText: 'Close',
-            animation: false,
-            width: 540
-          });
+        if (this.destination.lat == 0 || this.destination.lng == 0){
+          this.lat = response["data"].latitude;
+          this.lng = response["data"].longitude;
+          this.mapView = false;
+        }
         else
-          this.openMap(content);
+          this.mapView = true;
+        this.openMap(content);
       }
       else
         swal({
