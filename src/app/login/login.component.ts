@@ -35,14 +35,18 @@ export class LoginComponent implements OnInit {
       //     console.log("Failed",result)
       //   }
       // })
-      this.authService.login(this.loginForm.value).subscribe(response =>{
-        if(response["statusCode"] == 200){
+      this.authService.login(this.loginForm.value).subscribe(response => {
+        if (response["statusCode"] == 200) {
           this.router.navigate(["/opentrips"]);
-          localStorage.setItem("userLoggedIn","true");
+          localStorage.setItem("userLoggedIn", "true");
         }
         else
-        document.getElementById("wrongCred").innerHTML = "Wrong credentials entered, please try again."
-      })
+          document.getElementById("wrongCred").innerHTML = "Wrong credentials entered, please try again."
+      },
+        err => {
+          if (err.status == 500)
+            document.getElementById("wrongCred").innerHTML = "Wrong credentials entered, please try again."
+        })
     }
   }
 
