@@ -36,7 +36,7 @@ export class LoginComponent implements OnInit {
       //   }
       // })
       this.authService.login(this.loginForm.value).subscribe(response =>{
-        if(response["data"] == true){
+        if(response["statusCode"] == 200){
           this.router.navigate(["/opentrips"]);
           localStorage.setItem("userLoggedIn","true");
         }
