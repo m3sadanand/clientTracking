@@ -66,22 +66,24 @@ export class OpenTripsComponent implements OnInit {
     this.subscription = interval(environment.refreshTimer).subscribe(val => this.getCorporateOpenTrips());
   }
 
-  getCorporateOpenTrips(){
-    this.opentripService.getCorporateOpenTrips().subscribe((response) => {
-      var trips = [];
-      response["data"].forEach(element => {
-        if (element.corporateName == "Accenture Solutions Private Limited - CC" ||
-          element.corporateName == "Accenture Solutions Private Limited - Goa" ||
-          element.corporateName == "Accenture Solutions Private Limited - IDB" ||
-          element.corporateName == "Accenture Solutions Private Limited"
-        )
-          trips.push(element);
-      });
-      trips.sort((a, b) => a.tripId - b.tripId);
-      this.dataSource = new MatTableDataSource(trips);
-      this.dataSource.paginator = this.paginator;
-      this.dataSource.sort = this.sort;
-    })
+  getCorporateOpenTrips() {
+    if (localStorage.getItem("userLoggedIn") == "true") {
+      this.opentripService.getCorporateOpenTrips().subscribe((response) => {
+        var trips = [];
+        response["data"].forEach(element => {
+          if (element.corporateName == "Accenture Solutions Private Limited - CC" ||
+            element.corporateName == "Accenture Solutions Private Limited - Goa" ||
+            element.corporateName == "Accenture Solutions Private Limited - IDB" ||
+            element.corporateName == "Accenture Solutions Private Limited"
+          )
+            trips.push(element);
+        });
+        trips.sort((a, b) => a.tripId - b.tripId);
+        this.dataSource = new MatTableDataSource(trips);
+        this.dataSource.paginator = this.paginator;
+        this.dataSource.sort = this.sort;
+      })
+    }
   }
 
   getAlert(tripId,content){

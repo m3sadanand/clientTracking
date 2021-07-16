@@ -10,7 +10,7 @@ import { tap } from "rxjs/operators";
 export class AuthServiceService {
 
   constructor(private http:HttpClient) { }
-  url:string = "http://182.18.138.170:11010/odoconnew/signin";
+  url:string = "http://182.18.138.170:11010/odoconnew/newsignin";
 
   // login(data):Observable<any>{
   //   return this.http.post(`${baseUrl}users/login`,data)
