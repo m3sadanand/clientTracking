@@ -7,14 +7,19 @@ export class openTripModal {
     customerMobile:string;
     driver:string;
     spBookingRefNo:string;
+    driverMobile: string;
+    vehicle: string;
 
-    constructor(Date,BookingRef,CustomerName,CustomerMobile,Vehicle,Driver,Device,SPBookingRefNo){
+    constructor(Date,BookingRef,CustomerName,CustomerMobile,Vehicle,Driver,Device,SPBookingRefNo
+                ,driverMobile,vehicle){
         this.date = Date;
         this.bookingRefNo = BookingRef;
         this.customerName = CustomerName;
         this.customerMobile = CustomerMobile;
         this.driver = Driver;
         this.spBookingRefNo = SPBookingRefNo;
+        this.driverMobile = driverMobile;
+        this.vehicle = vehicle;
     }
 }
 
