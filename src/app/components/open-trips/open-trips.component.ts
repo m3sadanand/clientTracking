@@ -24,8 +24,10 @@ export class OpenTripsComponent implements OnInit {
   destination: any;
   opentrips: openTripModal[] = [];
   closeResult: string;
-  displayedColumns: string[] = ['SrNo', 'Date','CustomerName','CustomerMobile','Driver','VehicleLocation','Alert','SPBookingRefNo'];
-  dataSource: MatTableDataSource<openTripModal>;
+  displayedColumns: string[] = ['SrNo', 'Date','CustomerName','CustomerMobile','Driver','driverMobile','vehicle','VehicleLocation','Alert','SPBookingRefNo'];
+  openTripsDs: MatTableDataSource<openTripModal>;
+  scheduledTripDS: MatTableDataSource<openTripModal>;
+  closedTripsDS: MatTableDataSource<openTripModal>;
   public renderOptions = {
     suppressMarkers: true,
   }
@@ -48,6 +50,11 @@ export class OpenTripsComponent implements OnInit {
   tripId: string;
   subscription: Subscription;
   mapView: boolean = false;
+  locatedGuest: string;
+  locatedGuestMobile: string;
+  locatedDriver: string;
+  locatedDriverMobile: string;
+  locatedCarRegNo: string;
 
   constructor(
     public opentripService: OpentripsService, 
@@ -79,9 +86,41 @@ export class OpenTripsComponent implements OnInit {
             trips.push(element);
         });
         trips.sort((a, b) => a.tripId - b.tripId);
-        this.dataSource = new MatTableDataSource(trips);
-        this.dataSource.paginator = this.paginator;
-        this.dataSource.sort = this.sort;
+        this.openTripsDs = new MatTableDataSource(trips);
+        this.openTripsDs.paginator = this.paginator;
+        this.openTripsDs.sort = this.sort;
+      })
+
+      this.opentripService.getCorporateScheduledTrips().subscribe((response) => {
+        var trips = [];
+        response["data"].forEach(element => {
+          if (element.corporateName == "Accenture Solutions Private Limited - CC" ||
+            element.corporateName == "Accenture Solutions Private Limited - Goa" ||
+            element.corporateName == "Accenture Solutions Private Limited - IDB" ||
+            element.corporateName == "Accenture Solutions Private Limited"
+          )
+            trips.push(element);
+        });
+        trips.sort((a, b) => a.tripId - b.tripId);
+        this.scheduledTripDS = new MatTableDataSource(trips);
+        this.scheduledTripDS.paginator = this.paginator;
+        this.scheduledTripDS.sort = this.sort;
+      })
+
+      this.opentripService.getCorporateClosedTrips().subscribe((response) => {
+        var trips = [];
+        response["data"].forEach(element => {
+          if (element.corporateName == "Accenture Solutions Private Limited - CC" ||
+            element.corporateName == "Accenture Solutions Private Limited - Goa" ||
+            element.corporateName == "Accenture Solutions Private Limited - IDB" ||
+            element.corporateName == "Accenture Solutions Private Limited"
+          )
+            trips.push(element);
+        });
+        trips.sort((a, b) => a.tripId - b.tripId);
+        this.closedTripsDS = new MatTableDataSource(trips);
+        this.closedTripsDS.paginator = this.paginator;
+        this.closedTripsDS.sort = this.sort;
       })
     }
   }
@@ -141,6 +180,11 @@ export class OpenTripsComponent implements OnInit {
   }
 
   showLocation(tripId, content) {
+    this.getLocation(tripId,content,'firstCall');
+    this.subscription = interval(35000).subscribe(val => this.getLocation(tripId,content,'timerCall'));
+  }
+
+  getLocation(tripId, content, calltype) {
     this.opentripService.getTripLocation(tripId).subscribe((response) => {
       if (response["statusCode"] == 200) {
         this.origin = {
@@ -158,7 +202,14 @@ export class OpenTripsComponent implements OnInit {
         }
         else
           this.mapView = true;
-        this.openMap(content);
+        if (calltype == 'firstCall') {
+          this.locatedGuest = response["data"].guestName;
+          this.locatedGuestMobile = response["data"].guestMobile;
+          this.locatedDriver = response["data"].driverName;
+          this.locatedDriverMobile = response["data"].driverMobile;
+          this.locatedCarRegNo = response["data"].vehicleRegNo;
+          this.openMap(content);
+        }
       }
       else
         swal({
@@ -175,10 +226,18 @@ export class OpenTripsComponent implements OnInit {
 
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
-    this.dataSource.filter = filterValue.trim().toLowerCase();
+    this.openTripsDs.filter = filterValue.trim().toLowerCase();
+    this.scheduledTripDS.filter = filterValue.trim().toLowerCase();
+    this.closedTripsDS.filter = filterValue.trim().toLowerCase();
 
-    if (this.dataSource.paginator) {
-      this.dataSource.paginator.firstPage();
+    if (this.openTripsDs.paginator) {
+      this.openTripsDs.paginator.firstPage();
+    }
+    if (this.scheduledTripDS.paginator) {
+      this.scheduledTripDS.paginator.firstPage();
+    }
+    if (this.closedTripsDS.paginator) {
+      this.closedTripsDS.paginator.firstPage();
     }
   }
 
